@@ -1,81 +1,81 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import { SNS } from "aws-sdk";
 
-import Todo from "../model/Todo";
+import LambdaMailgun from "../model/LambdaMailgun";
 
 const sns = new SNS();
-export default class TodoServerice {
+export default class LambdaMailgunService {
 
-    private Tablename: string = "TodosTable";
+    private Tablename: string = "LambdaMailgunTable";
 
     constructor(private docClient: DocumentClient) { }
 
-    async sendSNSmessage(data: string) {
+    async sendSNSmessage(data: LambdaMailgun) {
         const params = {
-          Message: 'test from code',
+          Message: JSON.stringify({ title: data.title, description: data.description }),
           // it is easy to pass reference to the topic as environment variable using aws cdk
           TopicArn: 'arn:aws:sns:us-east-1:348561083972:receeve-mailgun-connector-sns' 
         };
         await sns.publish(params).promise()
      }
 
-    async getAllTodos(): Promise<Todo[]> {
-        const todos = await this.docClient.scan({
+    async getAllLambdaMailgunData(): Promise<LambdaMailgun[]> {
+        const lambdamailgundata = await this.docClient.scan({
             TableName: this.Tablename,
         }).promise()
-        return todos.Items as Todo[];
+        return lambdamailgundata.Items as LambdaMailgun[];
     }
 
-    async createTodo(todo: Todo): Promise<Todo> {
+    async createLambdaMailgunData(lambdamailgundata: LambdaMailgun): Promise<LambdaMailgun> {
         await this.docClient.put({
             TableName: this.Tablename,
-            Item: todo
+            Item: lambdamailgundata
         }).promise()
-        this.sendSNSmessage(todo.description);
-        return todo as Todo;
+        this.sendSNSmessage(lambdamailgundata);
+        return lambdamailgundata as LambdaMailgun;
 
     }
 
-    async getTodo(id: string): Promise<any> {
+    async getLambdaMailgunData(id: string): Promise<any> {
 
-        const todo = await this.docClient.get({
+        const lambdamailgundata = await this.docClient.get({
             TableName: this.Tablename,
             Key: {
-                todosId: id
+                lambdamailgundataId: id
             }
         }).promise()
-        if (!todo.Item) {
+        if (!lambdamailgundata.Item) {
             throw new Error("Id does not exit");
         }
-        return todo.Item as Todo;
+        return lambdamailgundata.Item as LambdaMailgun;
 
     }
 
-    async updateTodo(id: string, todo: Partial<Todo>): Promise<Todo> {
+    async updateLambdaMailgunData(id: string, lambdamailgundata: Partial<LambdaMailgun>): Promise<LambdaMailgun> {
         const updated = await this.docClient
             .update({
                 TableName: this.Tablename,
-                Key: { todosId: id },
+                Key: { lambdamailgundataId: id },
                 UpdateExpression:
                     "set #status = :status",
                 ExpressionAttributeNames: {
                     "#status": "status",
                 },
                 ExpressionAttributeValues: {
-                    ":status": todo.status,
+                    ":status": lambdamailgundata.status,
                 },
                 ReturnValues: "ALL_NEW",
             })
             .promise();
 
-        return updated.Attributes as Todo;
+        return updated.Attributes as LambdaMailgun;
     }
 
-    async deleteTodo(id: string): Promise<any> {
+    async deleteLambdaMailgunData(id: string): Promise<any> {
         return await this.docClient.delete({
             TableName: this.Tablename,
             Key: {
-                todosId: id
+                lambdamailgundataId: id
             }
         }).promise()
 

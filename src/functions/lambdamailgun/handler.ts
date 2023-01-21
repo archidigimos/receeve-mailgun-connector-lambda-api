@@ -1,29 +1,29 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
-import todosService from '../../services'
+import lambdaMailgunService from '../../services'
 
 import { v4 } from "uuid";
 
-export const getAllTodos = middyfy(async (): Promise<APIGatewayProxyResult> => {
-    const todos = await todosService.getAllTodos();
+export const getAllLambdaMailgunData = middyfy(async (): Promise<APIGatewayProxyResult> => {
+    const lambdaMailgunData = await lambdaMailgunService.getAllLambdaMailgunData();
     return formatJSONResponse({
-        todos
+        lambdaMailgunData
     })
 })
 
-export const createTodo = middyfy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const createLambdaMailgunData = middyfy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const id = v4();
-        const todo = await todosService.createTodo({
-            todosId: id,
+        const lambdaMailgunData = await lambdaMailgunService.createLambdaMailgunData({
+            lambdamailgundataId: id,
             title: event.body.title,
             description: event.body.description,
             createdAt: new Date().toISOString(),
             status: false
         })
         return formatJSONResponse({
-            todo
+            lambdaMailgunData
         });
     } catch (e) {
         return formatJSONResponse({
@@ -33,12 +33,12 @@ export const createTodo = middyfy(async (event: APIGatewayProxyEvent): Promise<A
     }
 })
 
-export const getTodo = middyfy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const getLambdaMailgunData = middyfy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const id = event.pathParameters.id;
     try {
-        const todo = await todosService.getTodo(id)
+        const lambdaMailgunData = await lambdaMailgunService.getLambdaMailgunData(id)
         return formatJSONResponse({
-            todo, id
+            lambdaMailgunData, id
         });
     } catch (e) {
         return formatJSONResponse({
@@ -48,12 +48,12 @@ export const getTodo = middyfy(async (event: APIGatewayProxyEvent): Promise<APIG
     }
 })
 
-export const updateTodo = middyfy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const updateLambdaMailgunData = middyfy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const id = event.pathParameters.id;
     try {
-        const todo = await todosService.updateTodo(id, { status: event.body.status })
+        const lambdaMailgunData = await lambdaMailgunService.updateLambdaMailgunData(id, { status: event.body.status })
         return formatJSONResponse({
-            todo, id
+            lambdaMailgunData, id
         });
     } catch (e) {
         return formatJSONResponse({
@@ -63,12 +63,12 @@ export const updateTodo = middyfy(async (event: APIGatewayProxyEvent): Promise<A
     }
 })
 
-export const deleteTodo = middyfy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const deleteLambdaMailgunData = middyfy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const id = event.pathParameters.id;
     try {
-        const todo = await todosService.deleteTodo(id)
+        const lambdaMailgunData = await lambdaMailgunService.deleteLambdaMailgunData(id)
         return formatJSONResponse({
-            todo, id
+            lambdaMailgunData, id
         });
     } catch (e) {
         return formatJSONResponse({

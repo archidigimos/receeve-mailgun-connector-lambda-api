@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import { createTodo, getTodo, getAllTodos, updateTodo, deleteTodo } from '@functions/todo';
+import { createLambdaMailgunData, getLambdaMailgunData, getAllLambdaMailgunData, updateLambdaMailgunData, deleteLambdaMailgunData } from '@functions/lambdamailgun';
 
 const serverlessConfiguration: AWS = {
   service: 'receeve-mailgun-connector-lambda-api',
@@ -30,14 +30,14 @@ const serverlessConfiguration: AWS = {
             "dynamodb:UpdateItem",
             "dynamodb:DeleteItem",
           ],
-          Resource: "arn:aws:dynamodb:us-west-2:*:table/TodosTable",
+          Resource: "arn:aws:dynamodb:us-west-2:*:table/LambdaMailgunTable",
         }],
       },
 
     },
   },
   // import the function via paths
-  functions: { getAllTodos, createTodo, getTodo, updateTodo, deleteTodo },
+  functions: { getAllLambdaMailgunData, createLambdaMailgunData, getLambdaMailgunData, updateLambdaMailgunData, deleteLambdaMailgunData },
   package: { individually: true },
   custom:{
     esbuild: {
@@ -61,16 +61,16 @@ const serverlessConfiguration: AWS = {
   },
   resources: {
     Resources: {
-      TodosTable: {
+      LambdaMailgunTable: {
         Type: "AWS::DynamoDB::Table",
         Properties: {
-          TableName: "TodosTable",
+          TableName: "LambdaMailgunTable",
           AttributeDefinitions: [{
-            AttributeName: "todosId",
+            AttributeName: "lambdamailgundataId",
             AttributeType: "S",
           }],
           KeySchema: [{
-            AttributeName: "todosId",
+            AttributeName: "lambdamailgundataId",
             KeyType: "HASH"
           }],
           ProvisionedThroughput: {

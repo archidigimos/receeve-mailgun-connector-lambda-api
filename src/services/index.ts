@@ -1,6 +1,6 @@
 import dynamoDBClient from "../model";
-import TodoServerice from "./todosService"
+import LambdaMailgunService from "./lambdaMailgunService"
 
-const todoService = new TodoServerice(dynamoDBClient());
+const lambdaMailgunService = new LambdaMailgunService(dynamoDBClient());
 
-export default todoService;
+export default lambdaMailgunService;
