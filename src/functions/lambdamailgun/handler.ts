@@ -17,8 +17,8 @@ export const createLambdaMailgunData = middyfy(async (event: APIGatewayProxyEven
         const id = v4();
         const lambdaMailgunData = await lambdaMailgunService.createLambdaMailgunData({
             lambdamailgundataId: id,
-            title: event.body.title,
-            description: event.body.description,
+            signature: event.body.signature,
+            eventData: event.body.eventData,
             createdAt: new Date().toISOString(),
             status: false
         })

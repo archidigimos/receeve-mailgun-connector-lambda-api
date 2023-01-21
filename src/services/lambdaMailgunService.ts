@@ -1,5 +1,6 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import { SNS } from "aws-sdk";
+import * as crypto from "crypto";
 
 import LambdaMailgun from "../model/LambdaMailgun";
 
@@ -12,7 +13,7 @@ export default class LambdaMailgunService {
 
     async sendSNSmessage(data: LambdaMailgun) {
         const params = {
-          Message: JSON.stringify({ title: data.title, description: data.description }),
+          Message: JSON.stringify({ Provider: 'Mailgun', timestamp: data.eventData.timestamp, type: data.eventData.event }),
           // it is easy to pass reference to the topic as environment variable using aws cdk
           TopicArn: 'arn:aws:sns:us-east-1:348561083972:receeve-mailgun-connector-sns' 
         };
@@ -31,7 +32,7 @@ export default class LambdaMailgunService {
             TableName: this.Tablename,
             Item: lambdamailgundata
         }).promise()
-        this.sendSNSmessage(lambdamailgundata);
+        // this.sendSNSmessage(lambdamailgundata);
         return lambdamailgundata as LambdaMailgun;
 
     }

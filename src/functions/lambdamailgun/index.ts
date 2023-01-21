@@ -1,4 +1,5 @@
 import { handlerPath } from '@libs/handler-resolver';
+import schema from './schema';
 
 export const getAllLambdaMailgunData = {
     handler: `${handlerPath(__dirname)}/handler.getAllLambdaMailgunData`,
@@ -19,6 +20,11 @@ export const createLambdaMailgunData = {
             http: {
                 method: 'post',
                 path: 'lambdamailgun',
+                request: {
+                    schemas: {
+                        'application/json': schema,
+                    },
+                },
             },
         },
     ],
@@ -30,18 +36,6 @@ export const getLambdaMailgunData = {
         {
             http: {
                 method: 'get',
-                path: 'lambdamailgun/{id}',
-            },
-        },
-    ],
-};
-
-export const updateLambdaMailgunData = {
-    handler: `${handlerPath(__dirname)}/handler.updateLambdaMailgunData`,
-    events: [
-        {
-            http: {
-                method: 'put',
                 path: 'lambdamailgun/{id}',
             },
         },
