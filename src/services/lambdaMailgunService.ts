@@ -23,7 +23,6 @@ export default class LambdaMailgunService {
         }).promise()
         await sendMessage(lambdamailgundata);
         return lambdamailgundata as LambdaMailgun;
-
     }
 
     async getLambdaMailgunData(id: string): Promise<any> {
@@ -39,26 +38,6 @@ export default class LambdaMailgunService {
         }
         return lambdamailgundata.Item as LambdaMailgun;
 
-    }
-
-    async updateLambdaMailgunData(id: string, lambdamailgundata: Partial<LambdaMailgun>): Promise<LambdaMailgun> {
-        const updated = await this.docClient
-            .update({
-                TableName: this.Tablename,
-                Key: { lambdamailgundataId: id },
-                UpdateExpression:
-                    "set #status = :status",
-                ExpressionAttributeNames: {
-                    "#status": "status",
-                },
-                ExpressionAttributeValues: {
-                    ":status": lambdamailgundata.status,
-                },
-                ReturnValues: "ALL_NEW",
-            })
-            .promise();
-
-        return updated.Attributes as LambdaMailgun;
     }
 
     async deleteLambdaMailgunData(id: string): Promise<any> {

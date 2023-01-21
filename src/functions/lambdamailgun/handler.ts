@@ -19,6 +19,7 @@ export const createLambdaMailgunData = middyfy(async (event: APIGatewayProxyEven
             lambdamailgundataId: id,
             signature: event.body.signature,
             eventData: event.body.eventData,
+            webhook_name: event.body.webhook_name,
             createdAt: new Date().toISOString(),
             status: false
         })
@@ -37,21 +38,6 @@ export const getLambdaMailgunData = middyfy(async (event: APIGatewayProxyEvent):
     const id = event.pathParameters.id;
     try {
         const lambdaMailgunData = await lambdaMailgunService.getLambdaMailgunData(id)
-        return formatJSONResponse({
-            lambdaMailgunData, id
-        });
-    } catch (e) {
-        return formatJSONResponse({
-            status: 500,
-            message: e
-        });
-    }
-})
-
-export const updateLambdaMailgunData = middyfy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    const id = event.pathParameters.id;
-    try {
-        const lambdaMailgunData = await lambdaMailgunService.updateLambdaMailgunData(id, { status: event.body.status })
         return formatJSONResponse({
             lambdaMailgunData, id
         });
