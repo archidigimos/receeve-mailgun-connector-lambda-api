@@ -1,23 +1,13 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import { SNS } from "aws-sdk";
 import * as crypto from "crypto";
 
 import LambdaMailgun from "../model/LambdaMailgun";
-
-const sns = new SNS();
+import sendMessage from "./snsservice";
 export default class LambdaMailgunService {
 
     private Tablename: string = "LambdaMailgunTable";
 
     constructor(private docClient: DocumentClient) { }
-
-    async sendSNSmessage(data: LambdaMailgun) {
-        const params = {
-          Message: JSON.stringify({ Provider: 'Mailgun', timestamp: data.eventData.timestamp, type: data.eventData.event }),
-          TopicArn: `arn:aws:sns:${process.env.REGION}:${process.env.ACCOUNT_ID}:receeve-mailgun-connector-sns` 
-        };
-        await sns.publish(params).promise()
-     }
 
     async getAllLambdaMailgunData(): Promise<LambdaMailgun[]> {
         const lambdamailgundata = await this.docClient.scan({
@@ -31,7 +21,7 @@ export default class LambdaMailgunService {
             TableName: this.Tablename,
             Item: lambdamailgundata
         }).promise()
-        this.sendSNSmessage(lambdamailgundata);
+        await sendMessage(lambdamailgundata);
         return lambdamailgundata as LambdaMailgun;
 
     }

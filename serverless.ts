@@ -16,8 +16,8 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      REGION: 'us-east-1',
-      ACCOUNT_ID: '348561083972',
+      region: 'us-east-1',
+      accountId: '348561083972',
     },
     iam: {
       role: {
@@ -33,6 +33,10 @@ const serverlessConfiguration: AWS = {
             "dynamodb:DeleteItem",
           ],
           Resource: "arn:aws:dynamodb:us-west-2:*:table/LambdaMailgunTable",
+        }, {
+          Effect: "Allow",
+          Action: ["sns:Publish"],
+          Resource: "arn:aws:sns:*:*:*"
         }],
       },
 
@@ -41,7 +45,7 @@ const serverlessConfiguration: AWS = {
   // import the function via paths
   functions: { getAllLambdaMailgunData, createLambdaMailgunData, getLambdaMailgunData, deleteLambdaMailgunData },
   package: { individually: true },
-  custom:{
+  custom: {
     esbuild: {
       bundle: true,
       minify: false,
@@ -52,8 +56,8 @@ const serverlessConfiguration: AWS = {
       platform: 'node',
       concurrency: 10,
     },
-    dynamodb:{
-      start:{
+    dynamodb: {
+      start: {
         port: 5002,
         inMemory: true,
         migrate: true,
@@ -79,9 +83,14 @@ const serverlessConfiguration: AWS = {
             ReadCapacityUnits: 1,
             WriteCapacityUnits: 1
           },
-          
         }
-      }
+      },
+      LambdaMailgunSNS: {
+        Type: "AWS::SNS::Topic",
+        Properties: {
+          TopicName: "lambda-mailgun-sns"
+        }
+      },
     }
   }
 };

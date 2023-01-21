@@ -25,9 +25,13 @@ export const createLambdaMailgunData = {
                         'application/json': schema,
                     },
                 },
+                cors: true,
             },
         },
     ],
+    environment: {
+        snsTopicArn: `arn:aws:sns:${process.env.region}:${process.env.accountId}:lambda-mailgun-sns`
+    }
 };
 
 export const getLambdaMailgunData = {
