@@ -14,8 +14,7 @@ export default class LambdaMailgunService {
     async sendSNSmessage(data: LambdaMailgun) {
         const params = {
           Message: JSON.stringify({ Provider: 'Mailgun', timestamp: data.eventData.timestamp, type: data.eventData.event }),
-          // it is easy to pass reference to the topic as environment variable using aws cdk
-          TopicArn: 'arn:aws:sns:us-east-1:348561083972:receeve-mailgun-connector-sns' 
+          TopicArn: `arn:aws:sns:${process.env.REGION}:${process.env.ACCOUNT_ID}:receeve-mailgun-connector-sns` 
         };
         await sns.publish(params).promise()
      }
