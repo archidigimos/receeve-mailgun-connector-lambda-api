@@ -1,12 +1,23 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
+import { SNS } from "aws-sdk";
 
 import Todo from "../model/Todo";
 
+const sns = new SNS();
 export default class TodoServerice {
 
     private Tablename: string = "TodosTable";
 
     constructor(private docClient: DocumentClient) { }
+
+    async sendSNSmessage(data: string) {
+        const params = {
+          Message: 'test from code',
+          // it is easy to pass reference to the topic as environment variable using aws cdk
+          TopicArn: 'arn:aws:sns:us-east-1:348561083972:receeve-mailgun-connector-sns' 
+        };
+        await sns.publish(params).promise()
+     }
 
     async getAllTodos(): Promise<Todo[]> {
         const todos = await this.docClient.scan({
@@ -20,6 +31,7 @@ export default class TodoServerice {
             TableName: this.Tablename,
             Item: todo
         }).promise()
+        this.sendSNSmessage(todo.description);
         return todo as Todo;
 
     }
