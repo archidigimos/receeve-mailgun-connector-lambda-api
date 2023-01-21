@@ -32,7 +32,7 @@ export default class LambdaMailgunService {
             TableName: this.Tablename,
             Item: lambdamailgundata
         }).promise()
-        // this.sendSNSmessage(lambdamailgundata);
+        this.sendSNSmessage(lambdamailgundata);
         return lambdamailgundata as LambdaMailgun;
 
     }

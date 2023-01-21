@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import { createLambdaMailgunData, getLambdaMailgunData, getAllLambdaMailgunData, updateLambdaMailgunData, deleteLambdaMailgunData } from '@functions/lambdamailgun';
+import { createLambdaMailgunData, getLambdaMailgunData, getAllLambdaMailgunData, deleteLambdaMailgunData } from '@functions/lambdamailgun';
 
 const serverlessConfiguration: AWS = {
   service: 'receeve-mailgun-connector-lambda-api',
@@ -37,7 +37,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { getAllLambdaMailgunData, createLambdaMailgunData, getLambdaMailgunData, updateLambdaMailgunData, deleteLambdaMailgunData },
+  functions: { getAllLambdaMailgunData, createLambdaMailgunData, getLambdaMailgunData, deleteLambdaMailgunData },
   package: { individually: true },
   custom:{
     esbuild: {
