@@ -17,8 +17,5 @@ phases:
 
 artifacts:
   files:
-    - 'build/createLambdaMailgunData.zip'
-    - 'before_install.sh'
-    - 'after_install.sh'
-    - 'appspec.yml'
+    - 'build/*'
   target-path: 's3://codepipeline-us-east-1-591546837593/receeve-mailgun-conn/BuildArtif/'
