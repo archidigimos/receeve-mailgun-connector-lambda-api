@@ -8,7 +8,7 @@ phases:
       - sls plugin install -n serverless-offline
       - sls plugin install -n serverless-dynamodb-local
       - sls plugin install -n serverless-esbuild
-      - npx sls dynamodb install
+      - sls dynamodb install
   build:
     commands:
       - npx sls esbuild
