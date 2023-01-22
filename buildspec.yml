@@ -2,9 +2,9 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 14
     commands:
-      - nvm install v14.18.0
-      - nvm use v14.18.0
       - npm install -g serverless
       - npm install
       - sls plugin install -n serverless-offline
@@ -12,9 +12,13 @@ phases:
       - sls plugin install -n serverless-esbuild
       - sls dynamodb install
   build:
+    runtime-versions:
+      nodejs: 14
     commands:
       - npx sls esbuild
   post_build:
+    runtime-versions:
+      nodejs: 14
     commands:
       - echo Build completed on `date`
       - echo Deploying the Lambda function...
