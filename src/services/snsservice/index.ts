@@ -1,5 +1,5 @@
 import { SNS } from "aws-sdk";
-import LambdaMailgun from "../../db/LambdaMailgun";
+import LambdaMailgun from "../../db/ILambdaMailgun";
 
 const sns = new SNS();
 

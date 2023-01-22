@@ -1,6 +1,6 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 
-import LambdaMailgun from "../db/LambdaMailgun";
+import LambdaMailgun from "../db/ILambdaMailgun";
 import sendMessage from "./snsservice";
 export default class LambdaMailgunService {
 
