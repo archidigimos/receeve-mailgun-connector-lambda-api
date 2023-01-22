@@ -22,6 +22,3 @@ permissions:
     owner: root
     group: root
     mode: 755
-
-
-
