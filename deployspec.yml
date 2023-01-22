@@ -1,0 +1,9 @@
+version: 0.2
+
+phases:
+  deploy:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - echo Deploying the Lambda function...
+      - npx sls deploy
