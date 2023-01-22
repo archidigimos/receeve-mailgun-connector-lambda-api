@@ -16,9 +16,9 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      region: 'us-east-1',
-      accountId: '348561083972',
-      webhookSigningKey: '95f82492ce03039eac0d6dbc97227773-f7d687c0-50af170f',
+      region: '',
+      accountId: '',
+      webhookSigningKey: '',
     },
     iam: {
       role: {
