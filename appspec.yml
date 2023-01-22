@@ -17,7 +17,7 @@ hooks:
       runas: root
 
 permissions:
-  - object: /var/www/html/package.zip
+  - object: /var/www/html/createLambdaMailgunData.zip
     owner: root
     group: root
     mode: 755
