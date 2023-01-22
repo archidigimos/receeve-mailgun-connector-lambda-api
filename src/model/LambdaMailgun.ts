@@ -2,7 +2,6 @@ export default interface LambdaMailgun {
     lambdamailgundataId: string;
     signature: Signature;
     eventData: EventData;
-    webhook_name: string;
     status: boolean;
     createdAt: string;
 }

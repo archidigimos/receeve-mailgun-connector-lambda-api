@@ -16,12 +16,12 @@ export default class LambdaMailgunService {
         return lambdamailgundata.Items as LambdaMailgun[];
     }
 
-    async createLambdaMailgunData(lambdamailgundata: LambdaMailgun): Promise<LambdaMailgun> {
+    async createLambdaMailgunData(lambdamailgundata: LambdaMailgun, logger: any): Promise<LambdaMailgun> {
         await this.docClient.put({
             TableName: this.Tablename,
             Item: lambdamailgundata
         }).promise()
-        await sendMessage(lambdamailgundata);
+        await sendMessage(lambdamailgundata, logger);
         return lambdamailgundata as LambdaMailgun;
     }
 
