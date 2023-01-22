@@ -6,6 +6,8 @@ phases:
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email)
   build:
+    runtime-versions:
+      nodejs: 14
     commands:
       - echo Build started on `date`
       - npm ci
