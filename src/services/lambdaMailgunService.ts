@@ -1,5 +1,4 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import * as crypto from "crypto";
 
 import LambdaMailgun from "../model/LambdaMailgun";
 import sendMessage from "./snsservice";
@@ -9,13 +8,6 @@ export default class LambdaMailgunService {
 
     constructor(private docClient: DocumentClient) { }
 
-    async getAllLambdaMailgunData(): Promise<LambdaMailgun[]> {
-        const lambdamailgundata = await this.docClient.scan({
-            TableName: this.Tablename,
-        }).promise()
-        return lambdamailgundata.Items as LambdaMailgun[];
-    }
-
     async createLambdaMailgunData(lambdamailgundata: LambdaMailgun, logger: any): Promise<LambdaMailgun> {
         await this.docClient.put({
             TableName: this.Tablename,
@@ -23,30 +15,5 @@ export default class LambdaMailgunService {
         }).promise()
         await sendMessage(lambdamailgundata, logger);
         return lambdamailgundata as LambdaMailgun;
-    }
-
-    async getLambdaMailgunData(id: string): Promise<any> {
-
-        const lambdamailgundata = await this.docClient.get({
-            TableName: this.Tablename,
-            Key: {
-                lambdamailgundataId: id
-            }
-        }).promise()
-        if (!lambdamailgundata.Item) {
-            throw new Error("Id does not exit");
-        }
-        return lambdamailgundata.Item as LambdaMailgun;
-
-    }
-
-    async deleteLambdaMailgunData(id: string): Promise<any> {
-        return await this.docClient.delete({
-            TableName: this.Tablename,
-            Key: {
-                lambdamailgundataId: id
-            }
-        }).promise()
-
     }
 }

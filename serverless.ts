@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import { createLambdaMailgunData, getLambdaMailgunData, getAllLambdaMailgunData, deleteLambdaMailgunData } from '@functions/lambdamailgun';
+import { createLambdaMailgunData } from '@functions/lambdamailgun';
 
 const serverlessConfiguration: AWS = {
   service: 'receeve-mailgun-connector-lambda-api',
@@ -18,6 +18,7 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
       region: 'us-east-1',
       accountId: '348561083972',
+      webhookSigningKey: '95f82492ce03039eac0d6dbc97227773-f7d687c0-50af170f',
     },
     iam: {
       role: {
@@ -42,8 +43,7 @@ const serverlessConfiguration: AWS = {
 
     },
   },
-  // import the function via paths
-  functions: { getAllLambdaMailgunData, createLambdaMailgunData, getLambdaMailgunData, deleteLambdaMailgunData },
+  functions: { createLambdaMailgunData },
   package: { individually: true },
   custom: {
     esbuild: {
