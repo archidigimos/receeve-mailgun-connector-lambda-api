@@ -14,7 +14,8 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - aws s3 cp build/createLambdaMailgunData.zip s3://codepipeline-us-east-1-591546837593/receeve-mailgun-conn/BuildArtif/createLambdaMailgunData-$(date +%s).zip
 
 artifacts:
-  type: none
+  files:
+    - 'build/createLambdaMailgunData.zip'
+  target-path: 's3://codepipeline-us-east-1-591546837593/receeve-mailgun-conn/BuildArtif/createLambdaMailgunData-$(date +%s).zip'
