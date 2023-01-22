@@ -59,10 +59,16 @@ export const parsePayload = async (event: any): Promise<any> => {
   return body;
 }
 
-export const verifyWebhook = ({ signingKey, timestamp, token, signature }) => {
+export const verifyWebhook = (body: any) => {
+  const data = {
+    signingKey: process.env.MAILGUN_WEBHOOK_SIGNING_KEY,
+    timestamp: body['signature']['timestamp'],
+    token: body['signature']['token'],
+    signature: body['signature']['signature']
+  }
   const encodedToken = crypto
-    .createHmac('sha256', signingKey)
-    .update(timestamp.concat(token))
+    .createHmac('sha256', data.signingKey)
+    .update(data.timestamp.concat(data.token))
     .digest('hex');
-  if (!(encodedToken === signature)) throw 'Webhook verification failed';
+  if (!(encodedToken === data.signature)) throw 'Webhook verification failed';
 }

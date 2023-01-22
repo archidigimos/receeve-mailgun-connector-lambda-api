@@ -2,7 +2,6 @@ export default interface LambdaMailgun {
     lambdamailgundataId: string;
     signature: Signature;
     eventData: EventData;
-    status: boolean;
     createdAt: string;
 }
  

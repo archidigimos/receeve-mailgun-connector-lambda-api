@@ -1,5 +1,5 @@
 import { SNS } from "aws-sdk";
-import LambdaMailgun from "../../model/LambdaMailgun";
+import LambdaMailgun from "../../db/LambdaMailgun";
 
 const sns = new SNS();
 
@@ -11,6 +11,10 @@ const sendMessage = async (data: LambdaMailgun, logger: any) => {
     try {
         const result = await sns.publish(params).promise();
         logger.info(`Message sent to SNS topic: ${result.MessageId}`);
+        return ({
+            snsstatus: `Message sent to SNS topic: ${result.MessageId}`,
+            params
+        });
     } catch (err) {
         logger.info(`Error sending message to SNS topic: ${err}`);
         throw err;

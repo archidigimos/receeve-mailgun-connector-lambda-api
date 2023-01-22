@@ -1,6 +1,6 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 
-import LambdaMailgun from "../model/LambdaMailgun";
+import LambdaMailgun from "../db/LambdaMailgun";
 import sendMessage from "./snsservice";
 export default class LambdaMailgunService {
 
@@ -8,12 +8,12 @@ export default class LambdaMailgunService {
 
     constructor(private docClient: DocumentClient) { }
 
-    async createLambdaMailgunData(lambdamailgundata: LambdaMailgun, logger: any): Promise<LambdaMailgun> {
+    async createLambdaMailgunData(lambdamailgundata: LambdaMailgun, logger: any): Promise<any> {
         await this.docClient.put({
             TableName: this.Tablename,
             Item: lambdamailgundata
         }).promise()
-        await sendMessage(lambdamailgundata, logger);
-        return lambdamailgundata as LambdaMailgun;
+        const result = await sendMessage(lambdamailgundata, logger);
+        return result;
     }
 }

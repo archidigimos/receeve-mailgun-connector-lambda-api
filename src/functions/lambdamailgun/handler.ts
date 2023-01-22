@@ -11,22 +11,16 @@ export const createLambdaMailgunData = middyfy(async (event: APIGatewayProxyEven
     try {
         logger.addContext(context);
         const body = await parsePayload(event);
-        verifyWebhook({
-            signingKey: process.env.webhookSigningKey,
-            timestamp: body['signature']['timestamp'],
-            token: body['signature']['token'],
-            signature: body['signature']['signature']
-        })
+        verifyWebhook(body);
         const id = v4();
-        const lambdaMailgunData = await lambdaMailgunService.createLambdaMailgunData({
+        const result = await lambdaMailgunService.createLambdaMailgunData({
             lambdamailgundataId: id,
             signature: body['signature'],
             eventData: body['event-data'],
-            createdAt: new Date().toISOString(),
-            status: false
+            createdAt: new Date().toISOString()
         }, logger);
         return formatJSONResponse({
-            lambdaMailgunData
+            result
         });
     } catch (e) {
         return formatJSONResponse({

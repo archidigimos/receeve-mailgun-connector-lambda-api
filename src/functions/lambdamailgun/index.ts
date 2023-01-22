@@ -13,6 +13,5 @@ export const createLambdaMailgunData = {
     ],
     environment: {
         snsTopicArn: `arn:aws:sns:${process.env.region}:${process.env.accountId}:lambda-mailgun-sns`,
-        webhookSigningKey: `${process.env.webhookSigningKey}`,
     }
 };
