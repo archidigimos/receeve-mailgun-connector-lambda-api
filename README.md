@@ -101,6 +101,6 @@ serverless plugin install -n serverless-offline
 serverless plugin install -n serverless-dynamodb-local
 serverless plugin install -n serverless-esbuild
 sls dynamodb install
-
 npx sls deploy
+
 serverless offline start
