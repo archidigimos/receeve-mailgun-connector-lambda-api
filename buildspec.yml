@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - npm install -g serverless
+      - npm install
+      - sls plugin install -n serverless-offline
+      - sls plugin install -n serverless-dynamodb-local
+      - sls plugin install -n serverless-esbuild
+      - npx sls dynamodb install
+  build:
+    commands:
+      - npx sls esbuild
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Deploying the Lambda function...
+      - npx sls deploy
