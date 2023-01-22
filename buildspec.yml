@@ -11,3 +11,8 @@ phases:
       - sls plugin install -n serverless-dynamodb-local
       - sls plugin install -n serverless-esbuild
       - sls dynamodb install
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Deploying the Lambda function...
+      - npx sls deploy
