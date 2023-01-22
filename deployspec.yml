@@ -2,8 +2,6 @@ version: 0.2
 
 phases:
   deploy:
-    runtime-versions:
-      nodejs: 14
     commands:
-      - echo Deploying the Lambda function...
-      - npx sls deploy
+      - echo Deploying the package to the Lambda function...
+      - aws lambda update-function-code --function-name receeve-mailgun-connector-lambda-api-dev-createLambdaMailgunData --zip-file fileb://function.zip

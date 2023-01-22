@@ -5,14 +5,11 @@ phases:
     runtime-versions:
       nodejs: 14
     commands:
-      - npm install -g serverless
       - npm install
-      - sls plugin install -n serverless-offline
-      - sls plugin install -n serverless-dynamodb-local
-      - sls plugin install -n serverless-esbuild
-      - sls dynamodb install
+  build:
+    commands:
+      - npx tsc
+      - zip -r function.zip .
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo Deploying the Lambda function...
-      - npx sls deploy
