@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Building the project...
       - npm ci
-      - sls package --package build
+      - serverless package --package build
   post_build:
     commands:
       - echo Build completed on `date`
