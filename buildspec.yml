@@ -8,7 +8,6 @@ phases:
       - npm install
   build:
     commands:
-      - npx tsc
       - zip -r function.zip .
   post_build:
     commands:
