@@ -1,7 +1,0 @@
-version: 0.2
-
-phases:
-  deploy:
-    commands:
-      - echo Deploying the package to the Lambda function...
-      - aws lambda update-function-code --function-name receeve-mailgun-connector-lambda-api-dev-createLambdaMailgunData --zip-file fileb://function.zip

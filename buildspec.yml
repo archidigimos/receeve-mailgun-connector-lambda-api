@@ -1,14 +1,20 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      nodejs: 14
+  pre_build:
     commands:
-      - npm install
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email)
   build:
     commands:
-      - zip -r function.zip .
+      - echo Build started on `date`
+      - npm ci
+      - npx sls package
   post_build:
     commands:
       - echo Build completed on `date`
+
+artifacts:
+  type: zip
+  files:
+    - package.zip
