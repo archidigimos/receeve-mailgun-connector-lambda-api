@@ -5,7 +5,7 @@ const sns = new SNS();
 
 const sendMessage = async (data: LambdaMailgun, logger: any) => {
     const params = {
-        Message: JSON.stringify({ Provider: 'Mailgun', timestamp: data.eventData.timestamp, type: data.eventData.event }),
+        Message: JSON.stringify({ Provider: 'Mailgun', timestamp: data.eventData.timestamp, type: `email ${data.eventData.event}` }),
         TopicArn: process.env.snsTopicArn,
     };
     try {
