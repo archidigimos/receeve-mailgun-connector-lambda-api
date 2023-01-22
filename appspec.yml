@@ -8,11 +8,11 @@ files:
 
 hooks:
   BeforeInstall:
-    - location: hooks/before_install.sh
+    - location: before_install.sh
       timeout: 300
       runas: root
   AfterInstall:
-    - location: hooks/after_install.sh
+    - location: after_install.sh
       timeout: 300
       runas: root
 
