@@ -12,13 +12,9 @@ phases:
       - sls plugin install -n serverless-esbuild
       - sls dynamodb install
   build:
-    runtime-versions:
-      nodejs: 14
     commands:
       - npx sls esbuild
   post_build:
-    runtime-versions:
-      nodejs: 14
     commands:
       - echo Build completed on `date`
       - echo Deploying the Lambda function...
