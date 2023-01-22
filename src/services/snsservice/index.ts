@@ -12,7 +12,7 @@ const sendMessage = async (data: LambdaMailgun, logger: any) => {
         const result = await sns.publish(params).promise();
         logger.info(`Message sent to SNS topic: ${result.MessageId}`);
         return ({
-            snsstatus: `Message sent to SNS topic: ${result.MessageId}`,
+            snsstatus: `Message successfully sent to SNS topic: ${result.MessageId}`,
             params
         });
     } catch (err) {
