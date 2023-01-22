@@ -3,7 +3,7 @@ version: 0.0
 os: linux
 
 files:
-  - source: /
+  - source: s3://codepipeline-us-east-1-591546837593/receeve-mailgun-conn/BuildArtif/
     destination: /var/www/html
 
 hooks:
@@ -17,13 +17,11 @@ hooks:
       runas: root
 
 permissions:
-  - object: /var/www/html/createLambdaMailgunData.zip
-    owner: root
-    group: root
-    mode: 755
   - object: /var/www/html
     pattern: "**"
     owner: root
     group: root
     mode: 755
+
+
 
